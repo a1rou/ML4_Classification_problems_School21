@@ -40,9 +40,10 @@ Naive Bayes Classifier (model designed specifically for classification problems)
 Classification problems are similar to regression ones. In classification problems, the output space is a set of **C** 
 unordered and **mutually exclusive** labels (classes); we want to invent function *f* such:
 
-$`f: X \rightarrow Y`$, where  $`Y = \{1, 2, ..., C\}, X`$ - training set.
+[latex] - `f: X \rightarrow Y, \text{ where } Y \in \lbrace 1, 2, \dots, C \rbrace, X - \text{ training set}`
+, where _Y__= {1, 2, . . . , C}_, _X_ – training set.
 
-If we have only two classes (if we set ***Y*** = *{0, 1}*) the problem is called **binary classification**. We will focus on binary problems in this lesson.
+If we have only two classes (if we set [latex] - `Y \in \lbrace 0, 1 \rbrace`) the problem is called **binary classification**. We will focus on binary problems in this lesson.
 
 Real-life examples of binary classification include:
 * If a patient has a particular illness.
@@ -53,7 +54,7 @@ Real-life examples of binary classification include:
 
 From probabilistic point of view binary classification problem could be viewed as estimating probability for given instance x that this instance has label 1:
 
-$`p(y = 1|x; \theta), x`$ - instance, $`\theta`$ - parameters of the model 
+[latex] - `p(y=1|\mathbf{x}, \boldsymbol{\theta}), \mathbf{x} - \text{instance, } \boldsymbol{\theta} - \text{parameters of the model}` - parameters of the model 
 
 Binary problems are only one particular case of classification problems 
 (if ***C*** is greater than 2 we call that a **multiclass problem**). 
@@ -62,7 +63,7 @@ Solve ***C*** different binary problems in one-vs-all fashion, i.e.: train
 ***C*** models where for the **i**’s binary problem you define target as 1 when y = i, and define target as 0 when y ≠ i. 
 To make prediction in such case we can simply take *argmax* of ***C*** received scores:
 
-$`argmax_{i \in \{1, 2, ..., C\}} estimated`$ $`p(y = i; x, \theta)`$
+[latex] - `\arg \max_{i \in \lbrace 1, 2, \dots, C \rbrace} p(y=i|\mathbf{x}, \boldsymbol{\theta})`
 
 Sometimes it is more convenient (for solving business problems) to translate regression-like tasks into binary ones: 
 predict if a person has higher income than the average income in his/her country or forecast stock’s price movements 
@@ -76,11 +77,9 @@ to solve our task as classification problem even if our labels are ordered.
 
 Logistic Regression is model of the following form:
 
-```math
-p(y=1|x; \theta) = \sigma(a) = \frac {1} {1 + e^{-a}} \\ \text { where a = $\omega^Tx + b$ }
-```
+[latex] - `p(y=i|\mathbf{x}, \boldsymbol{\theta}) = \sigma (a) = \frac{1}{1 + e^{-a}}, \text{where } a = \mathbf{w}^T \mathbf{x} + b \text{ and } \boldsymbol{\theta} = (\mathbf{w}, b)`
 
-Function $`\boldsymbol \sigma`$ is called **sigmoid**. Logistic Regression is equivalent to linear combination of 
+Function [latex] - ` \sigma` is called **sigmoid**. Logistic Regression is equivalent to linear combination of 
 features of matrix ***X*** and adding bias term ***b***. Sometimes (when doing the math proofs) we absorb ***b*** and use an additional 
 column of ones in ***X*** representing bias inside the ***w*** vector. To compute the output of Logistic Regression for particular 
 instance ***x*** we need to multiply each component of ***x*** to the corresponding component of ***w*** and add bias number ***b***; 
@@ -92,16 +91,16 @@ Logistic Regression is not the best algorithm in terms of accuracy (on average) 
 it is easy to explain how your model works to any manager or user. 
 There is a simple relationship between parameters and data.
 
-How can we decide which parameters $`\theta`$ = {***w***, ***b***} to use? 
+How can we decide which parameters [latex] - ` \boldsymbol{\theta} = (\mathbf{w}, b)` to use? 
 There is a convenient way to train models – use the maximum likelihood estimation (MLE). 
 We want to figure out parameters that maximize the probability of receiving a given dataset ***X*** with ***Y***. 
 It can be formalized in the following way:
 
-$`p(y=1|x; \theta) = \sigma(a) = \frac {1} {1 + e^{-a}}`$
+[latex] - `p(y|\mathbf{x}, \boldsymbol{\theta}) = \sigma (a) = \frac{1}{1 + e^{-a}}`
 
 is equivalent to 
 
-$`p(y|x; \theta) = \text{Ber}(y|\sigma(\omega^Tx + b))`$
+[latex] - `p(y|\mathbf{x}, \boldsymbol{\theta}) =\text{Ber}\left(y|\sigma(\mathbf{w}^T \mathbf{x} + b)\right)`
 
 where Ber is [Bernoulli distribution](https://en.wikipedia.org/wiki/Bernoulli_distribution).
 
@@ -174,30 +173,37 @@ anyone, you just need to look at features and corresponding weights (“scores�
 
 #### Formulation
 
-There is another simple approach for classification problems called **Naive Bayes algorithm** (NB algorithm). 
-The core of NB is **Naive Bayes assumption**: we assume that all features are conditionally independent given the class label. 
-This assumption is too strong to be true in the real world scenarios but often NB classifiers give good results 
-even when NB assumption is violated.
+There is another simple approach for classification problems called **Naive Bayes algorithm** (NB algorithm). The core of NB is the next assumption: we assume that all features are conditionally independent given the class label (that is why it is called Naive). This assumption is too strong to be true in the real world scenarios but often NB classifiers give good results even when NB assumption is violated.
 
-If NB assumption holds we can derive probability of receiving feature vector x, given that label y for that vector 
-equals class c:
+The main idea of the method is to calculate posterior probability using the Bayes formula:
 
-$`p(x|y = c, \theta) = \prod_{d=1}^{D} p(x_d|y=c, \theta_{dc})`$
+[latex] - `\text{posterior} = \frac{\text{prior} \cdot \text{likelihood}}{\text{evidence}}`
 
-where $`x_d`$ – feature *d* for instance *x*, $`\theta`$ - parameters of the model, every feature has a separate parameter for every class.
+[latex] - `p(y=c|\mathbf{x}) = \frac{p(y=c) p(\mathbf{x}|y=c)}{p(\mathbf{x})} = \frac{p(y=c) p(\mathbf{x}|y=c)}{\sum_{c'} p(y=c') p(\mathbf{x}|y=c')}`
 
-The rules of probability allow us to compute $`p(y = c|x; \theta)`$:
+Thus our goal will be to Maximize A Posterior (MAP estimation). But if we take a closer look at the denominator, we can understand that it is constant since the values of the features [latex] - `x_i` are fixed for the dataset. Moreover, when NB assumption holds we can derive probability of receiving feature vector [latex] - `\mathbf{x}`, given that label _y_ for that vector equals class _c_:
 
-$`p(y = c|x, \theta) = {p(y=c|\pi) \prod_{d=1}^D p(x_d|y=c, \theta_{dc})\over{\sum_{c'} p(y=c'|\pi)\prod_{d=1}^D p(x_d|y=c', \theta_{dc'})}}`$
+[latex] - `p(\mathbf{x} | y=c) =\prod_{d=1}^D p \left( x_d | y=c \right)`
 
-> Source: [Kevin Murphy, Probabilistic Machine Learning: An Introduction](https://probml.github.io/pml-book/book1.html)
+![](RackMultipart20230823-1-8wl8w6_html_c66d13329d78e68c.png)
 
-where $`p(y = c|x; \pi)`$ is just the prior probability of class c.
+where [latex] - `x_d`– feature _d_ for instance [latex] - `\mathbf{x}`.
 
-To use this formula for training the classifier we need to specify the form of probability distributions of our features:
-* For binary features we use [Bernoulli distribution](https://en.wikipedia.org/wiki/Bernoulli_distribution).
-* For continuous features we can use Normal distribution or binarize them and stick to Bernoulli.
-* In case of categorical features, categorical (or Multinoulli) [distribution](https://en.wikipedia.org/wiki/Categorical_distribution) is appropriate.
+Combining all statements together, we get that our problem of maximizing the Posterior is equivalent to:
+
+[latex] - `p(y=c) p(\mathbf{x}|y=c) \rightarrow \max`
+
+To use this formula for training the classifier we need:
+
+1. to specify the form of probability distributions for prior
+2. to specify the form of probability distributions of our features
+3. and estimate both of them
+
+As for prior, for classification it is modeled with Bernoulli or Multinomial distribution. The good estimate for the class probability in this case would be the share of this class in the dataset. As for distributions of our features:
+
+- We use [Bernoulli distribution](https://en.wikipedia.org/wiki/Bernoulli_distribution) for binary features
+- We can use Normal distribution for continuous features or binarize them and stick to Bernoulli.
+- In case of categorical features, Categorical (or Multinomial) [distribution](https://en.wikipedia.org/wiki/Categorical_distribution) is appropriate.
 
 Again, in the real-life problems distributions of features may be different from Bernoulli/Multinoulli/Normal but, 
 like with NB assumption,  sometimes we still are capable of training accurate NB classifiers.
@@ -276,9 +282,11 @@ for multiclass setups. We will stick with binary problems for simplicity.
 
 Precision and recall are metrics for hard labels: not probabilities, but prediction of the class. Hard labels are received from estimated probabilities using thresholding:
 
-$`I(p(y = 1|x) > threshold)`$
+[latex] - `\mathbb{I}(y=1|x) \> \text{threshold}`
 
-where ***I*** - indicator function (one or zero, based on underlying statement, one if it is true, otherwise zero).
+_ **I** __(p(y = 1|x) \> threshold)_
+
+where [latex] - `\mathbb{I}` - indicator function (one or zero, based on underlying statement, one if it is true, otherwise zero).
 
 Hard labels allow us to construct a **confusion matrix**. Definition and the details of the confusion matrix 
 are described in this [source](https://en.wikipedia.org/wiki/Confusion_matrix), study it before reading the next paragraph.
