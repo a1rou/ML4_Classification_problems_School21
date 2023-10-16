@@ -40,10 +40,10 @@ Naive Bayes Classifier (model designed specifically for classification problems)
 Classification problems are similar to regression ones. In classification problems, the output space is a set of **C** 
 unordered and **mutually exclusive** labels (classes); we want to invent function *f* such:
 
-[latex] - `f: X \rightarrow Y, \text{ where } Y \in \lbrace 1, 2, \dots, C \rbrace, X - \text{ training set}`
+$$f: X \rightarrow Y, \text{ where } Y \in \lbrace 1, 2, \dots, C \rbrace, X - \text{ training set}$$
 , where _Y__= {1, 2, . . . , C}_, _X_ – training set.
 
-If we have only two classes (if we set [latex] - `Y \in \lbrace 0, 1 \rbrace`) the problem is called **binary classification**. We will focus on binary problems in this lesson.
+If we have only two classes (if we set $$Y \in \lbrace 0, 1 \rbrace$$) the problem is called **binary classification**. We will focus on binary problems in this lesson.
 
 Real-life examples of binary classification include:
 * If a patient has a particular illness.
@@ -54,7 +54,7 @@ Real-life examples of binary classification include:
 
 From probabilistic point of view binary classification problem could be viewed as estimating probability for given instance x that this instance has label 1:
 
-[latex] - `p(y=1|\mathbf{x}, \boldsymbol{\theta}), \mathbf{x} - \text{instance, } \boldsymbol{\theta} - \text{parameters of the model}` - parameters of the model 
+$$p(y=1|\mathbf{x}, \boldsymbol{\theta}), \mathbf{x} - \text{instance, } \boldsymbol{\theta} - \text{parameters of the model}$$ - parameters of the model 
 
 Binary problems are only one particular case of classification problems 
 (if ***C*** is greater than 2 we call that a **multiclass problem**). 
@@ -63,7 +63,7 @@ Solve ***C*** different binary problems in one-vs-all fashion, i.e.: train
 ***C*** models where for the **i**’s binary problem you define target as 1 when y = i, and define target as 0 when y ≠ i. 
 To make prediction in such case we can simply take *argmax* of ***C*** received scores:
 
-[latex] - `\arg \max_{i \in \lbrace 1, 2, \dots, C \rbrace} p(y=i|\mathbf{x}, \boldsymbol{\theta})`
+$$\arg \max_{i \in \lbrace 1, 2, \dots, C \rbrace} p(y=i|\mathbf{x}, \boldsymbol{\theta})$$
 
 Sometimes it is more convenient (for solving business problems) to translate regression-like tasks into binary ones: 
 predict if a person has higher income than the average income in his/her country or forecast stock’s price movements 
@@ -77,9 +77,9 @@ to solve our task as classification problem even if our labels are ordered.
 
 Logistic Regression is model of the following form:
 
-[latex] - `p(y=i|\mathbf{x}, \boldsymbol{\theta}) = \sigma (a) = \frac{1}{1 + e^{-a}}, \text{where } a = \mathbf{w}^T \mathbf{x} + b \text{ and } \boldsymbol{\theta} = (\mathbf{w}, b)`
+$$p(y=i|\mathbf{x}, \boldsymbol{\theta}) = \sigma (a) = \frac{1}{1 + e^{-a}}, \text{where } a = \mathbf{w}^T \mathbf{x} + b \text{ and } \boldsymbol{\theta} = (\mathbf{w}, b)$$
 
-Function [latex] - ` \sigma` is called **sigmoid**. Logistic Regression is equivalent to linear combination of 
+Function $$\sigma$$ is called **sigmoid**. Logistic Regression is equivalent to linear combination of 
 features of matrix ***X*** and adding bias term ***b***. Sometimes (when doing the math proofs) we absorb ***b*** and use an additional 
 column of ones in ***X*** representing bias inside the ***w*** vector. To compute the output of Logistic Regression for particular 
 instance ***x*** we need to multiply each component of ***x*** to the corresponding component of ***w*** and add bias number ***b***; 
@@ -91,16 +91,16 @@ Logistic Regression is not the best algorithm in terms of accuracy (on average) 
 it is easy to explain how your model works to any manager or user. 
 There is a simple relationship between parameters and data.
 
-How can we decide which parameters [latex] - ` \boldsymbol{\theta} = (\mathbf{w}, b)` to use? 
+How can we decide which parameters $$\boldsymbol{\theta} = (\mathbf{w}, b)$$ to use? 
 There is a convenient way to train models – use the maximum likelihood estimation (MLE). 
 We want to figure out parameters that maximize the probability of receiving a given dataset ***X*** with ***Y***. 
 It can be formalized in the following way:
 
-[latex] - `p(y|\mathbf{x}, \boldsymbol{\theta}) = \sigma (a) = \frac{1}{1 + e^{-a}}`
+$$p(y|\mathbf{x}, \boldsymbol{\theta}) = \sigma (a) = \frac{1}{1 + e^{-a}}$$
 
 is equivalent to 
 
-[latex] - `p(y|\mathbf{x}, \boldsymbol{\theta}) =\text{Ber}\left(y|\sigma(\mathbf{w}^T \mathbf{x} + b)\right)`
+$$p(y|\mathbf{x}, \boldsymbol{\theta}) =\text{Ber}\left(y|\sigma(\mathbf{w}^T \mathbf{x} + b)\right)$$
 
 where Ber is [Bernoulli distribution](https://en.wikipedia.org/wiki/Bernoulli_distribution).
 
@@ -177,21 +177,21 @@ There is another simple approach for classification problems called **Naive Baye
 
 The main idea of the method is to calculate posterior probability using the Bayes formula:
 
-[latex] - `\text{posterior} = \frac{\text{prior} \cdot \text{likelihood}}{\text{evidence}}`
+$$\text{posterior} = \frac{\text{prior} \cdot \text{likelihood}}{\text{evidence}}$$
 
-[latex] - `p(y=c|\mathbf{x}) = \frac{p(y=c) p(\mathbf{x}|y=c)}{p(\mathbf{x})} = \frac{p(y=c) p(\mathbf{x}|y=c)}{\sum_{c'} p(y=c') p(\mathbf{x}|y=c')}`
+$$p(y=c|\mathbf{x}) = \frac{p(y=c) p(\mathbf{x}|y=c)}{p(\mathbf{x})} = \frac{p(y=c) p(\mathbf{x}|y=c)}{\sum_{c'} p(y=c') p(\mathbf{x}|y=c')}$$
 
-Thus our goal will be to Maximize A Posterior (MAP estimation). But if we take a closer look at the denominator, we can understand that it is constant since the values of the features [latex] - `x_i` are fixed for the dataset. Moreover, when NB assumption holds we can derive probability of receiving feature vector [latex] - `\mathbf{x}`, given that label _y_ for that vector equals class _c_:
+Thus our goal will be to Maximize A Posterior (MAP estimation). But if we take a closer look at the denominator, we can understand that it is constant since the values of the features [latex] - `x_i` are fixed for the dataset. Moreover, when NB assumption holds we can derive probability of receiving feature vector $$\mathbf{x}$$, given that label _y_ for that vector equals class _c_:
 
-[latex] - `p(\mathbf{x} | y=c) =\prod_{d=1}^D p \left( x_d | y=c \right)`
+$$p(\mathbf{x} | y=c) =\prod_{d=1}^D p \left( x_d | y=c \right)$$
 
 ![](RackMultipart20230823-1-8wl8w6_html_c66d13329d78e68c.png)
 
-where [latex] - `x_d`– feature _d_ for instance [latex] - `\mathbf{x}`.
+where $$x_d$$– feature _d_ for instance $$\mathbf{x}$$.
 
 Combining all statements together, we get that our problem of maximizing the Posterior is equivalent to:
 
-[latex] - `p(y=c) p(\mathbf{x}|y=c) \rightarrow \max`
+$$p(y=c) p(\mathbf{x}|y=c) \rightarrow \max$$
 
 To use this formula for training the classifier we need:
 
@@ -282,11 +282,11 @@ for multiclass setups. We will stick with binary problems for simplicity.
 
 Precision and recall are metrics for hard labels: not probabilities, but prediction of the class. Hard labels are received from estimated probabilities using thresholding:
 
-[latex] - `\mathbb{I}(y=1|x) \> \text{threshold}`
+$$\mathbb{I}(y=1|x) \> \text{threshold}$$
 
 _ **I** __(p(y = 1|x) \> threshold)_
 
-where [latex] - `\mathbb{I}` - indicator function (one or zero, based on underlying statement, one if it is true, otherwise zero).
+where $$\mathbb{I}$$ - indicator function (one or zero, based on underlying statement, one if it is true, otherwise zero).
 
 Hard labels allow us to construct a **confusion matrix**. Definition and the details of the confusion matrix 
 are described in this [source](https://en.wikipedia.org/wiki/Confusion_matrix), study it before reading the next paragraph.
