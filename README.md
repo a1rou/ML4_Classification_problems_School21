@@ -412,6 +412,4 @@ Add new features into your pipeline, repeat step 4. Did you manage to increase y
 * Bonus exercises marked with * in [Chapter V. Task](#chapter-v-task)
 * Derivation: Using MLE in this context means minimizing NLL.
 
-💡 [Tap here](https://forms.yandex.ru/cloud/646b472b6938722a69a85da0/) **to leave your feedback on the project**. Pedago Team really tries to make your educational experience better.
-
-
+>Please leave feedback on the project in the [feedback form.](https://forms.yandex.ru/cloud/646b472b6938722a69a85da0/) 
