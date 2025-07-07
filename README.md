@@ -307,7 +307,7 @@ The goal of this task is to get a deep understanding of the basic classification
 7. Try to create non-linear features, for example:
 <br/><br/>
 fractions: feature1/feature2
-groupby features: `df[‘categorical_feature’].map(df.groupby(‘categorical_feature’)[‘continious_feature’].mean())`
+<br/>groupby features: `df[‘categorical_feature’].map(df.groupby(‘categorical_feature’)[‘continious_feature’].mean())`
 <br/><br/>
 Add new features to your pipeline, repeat step 4. Did you manage to increase your Gini score (you should!)?
 <br/><br/>
