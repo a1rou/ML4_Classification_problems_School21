@@ -295,7 +295,7 @@ The goal of this task is to get a deep understanding of the basic classification
 ## Chapter V. Task
 
 1. Download data from Don’tGetKicked competition. <br/><br/>
-2. Design the train/validation/test split. Use the "PurchDate" field for the split, test must be later than validation, same for validation and train: train.PurchDate < valid.PurchDate < test.PurchDate. Use the first 33% of dates for the train, the last 33% of dates for the test, and the middle 33% for the validation set. *Don’t use the test dataset until the end!* <br/><br/>
+2. Design the train/validation/test split. Use the "PurchDate" field for the split, test must be later than validation, same for validation and train: train.PurchDate < valid.PurchDate < test.PurchDate. Use the first $\frac{1}{3}$ of dates for the train, the last $\frac{1}{3}$ of dates for the test, and the middle $\frac{1}{3}$ for the validation set. *Don’t use the test dataset until the end!* <br/><br/>
 3. Use LabelEncoder or OneHotEncoder from sklearn to preprocess categorical variables. Be careful with data leakage (fit Encoder to training and apply to validation & test). Consider another coding approach if you encounter new categorical values in validation & test (not seen in training): https://contrib.scikit-learn.org/category_encoders/count.html <br/><br/>
 4. Train LogisticRegression, GaussianNB, KNN from sklearn on the training dataset and check the quality of your algorithms on the validation dataset. The dependent variable (IsBadBuy) is binary. Don't forget to normalize your datasets before training your models.
 <br/><br/>You must get at least **0.15 Gini score** (the best of all three). Which algorithm performs better? And why?
