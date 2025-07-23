@@ -319,7 +319,7 @@ Add new features to your pipeline, repeat step 4. Did you manage to increase you
 <br/><br/>
 11. Check the Gini scores on all three datasets for your best model: training Gini, valid Gini, test Gini. Do you see a drop in performance when comparing the valid quality to the test quality? Is your model overfitted or not? Explain.
 <br/><br/>
-12. Implement calculation or Recall, Precision, F1 score and AUC PR metrics.
+12. Implement calculation of Recall, Precision, F1 score and AUC PR metrics.
 <br/>Compare your algorithms on the test dataset using AUC PR metric.
 <br/><br/>
 13. Which hard label metric do you prefer for the task of detecting "lemon" cars?
