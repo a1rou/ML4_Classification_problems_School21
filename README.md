@@ -34,10 +34,9 @@ We will consider 3 types of classification models: Logistic Regression (which is
 
 Classification problems are similar to regression problems. In classification problems, the output space is a set of **C** unordered and **mutually exclusive** labels (classes); we want to invent such a function *f*:
 
-$$f: X \rightarrow Y, \text{ where } Y \in \lbrace 1, 2, \dots, C \rbrace, X - \text{ training set}$$
-, where _Y__= {1, 2, . . . , C}_, _X_ — training set.
+$$f: X \rightarrow Y, \text{ where } Y \in \lbrace 1, 2, \dots, C \rbrace, X - \text{ training set}.$$
 
-When we have only two classes (when we set $$Y \in \lbrace 0, 1 \rbrace$$), the problem is called **binary classification**. We will focus on binary problems in this lesson.
+When we have only two classes (when we set $Y \in \lbrace 0, 1 \rbrace$), the problem is called **binary classification**. We will focus on binary problems in this lesson.
 
 Real-life examples of binary classification include:
 * Whether a patient has a particular disease.
@@ -46,13 +45,15 @@ Real-life examples of binary classification include:
 * Predicting whether the price of a particular stock will rise or fall in the next few seconds (useful for trading).
 * Predicting whether a customer will pay back a loan (probability of default, PD; useful in banking).
 
-From a probabilistic point of view, a binary classification problem could be seen as estimating the probability that a given instance x has label 1:
+From a probabilistic point of view, a binary classification problem could be seen as estimating the probability that a given instance  $\mathbf{x}$ has label $1$:
 
-$$p(y=1|\mathbf{x}, \boldsymbol{\theta}), \mathbf{x} - \text{instance, } \boldsymbol{\theta} - \text{parameters of the model}$$ - parameters of the model 
+$$p(y=1|\mathbf{x}, \boldsymbol{\theta}),$$
+
+where $\mathbf{x}$ - instance, $\boldsymbol{\theta}$ - parameters of the model.
 
 Binary problems are just a special case of classification problems (if ***C*** is greater than 2, we call it a **multiclass problem**). Binary problem approaches can be used to solve multiclass problems.  Solve ***C*** different binary problems in a one-vs-all fashion, i.e.: train ***C*** models, where for the binary problem of **i** you define goal as 1 if y = i, and define goal as 0 if y ≠ i. To make a prediction in such a case, we can simply take the *argmax* of the ***C*** received scores:
 
-$$\arg \max_{i \in \lbrace 1, 2, \dots, C \rbrace} p(y=i|\mathbf{x}, \boldsymbol{\theta})$$
+$$\arg \max_{i \in \lbrace 1, 2, \dots, C \rbrace} p(y=i|\mathbf{x}, \boldsymbol{\theta}).$$
 
 Sometimes it is more convenient (for solving business problems) to translate regression-like tasks into binary ones: predicting whether a person has a higher income than the average income in his or her country, or predicting stock price movements (as in the example above). Sometimes classification problems can be transformed into regression problems by ordering the labels. In the definition above, we defined a set of labels C to be unordered, but sometimes it is convenient to solve our task as a classification problem even if our labels are ordered.
 
@@ -64,7 +65,7 @@ Logistic Regression is model of the following form:
 
 $$p(y=i|\mathbf{x}, \boldsymbol{\theta}) = \sigma (a) = \frac{1}{1 + e^{-a}}, \text{where } a = \mathbf{w}^T \mathbf{x} + b \text{ and } \boldsymbol{\theta} = (\mathbf{w}, b)$$
 
-The function $$\sigma$$ is called **sigmoid**. Logistic Regression is equivalent to linearly combining the features of the matrix ***X*** and adding a bias term ***b***. Sometimes (when doing the math proofs) we include ***b*** and use an additional column of ones in ***X*** representing the bias within the ***w*** vector. To compute the output of the logistic regression for a particular example ***x***, we need to multiply each component of ***x*** by the corresponding component of ***w*** and add the bias number ***b***; then squash your result with the sigmoid function. You can plot the sigmoid function and make sure that its output is between 0 and 1. "Regression" is only part of the name of the algorithm, it has nothing to do with the regression problem.
+The function $\sigma$ is called **sigmoid**. Logistic Regression is equivalent to linearly combining the features of the matrix ***X*** and adding a bias term ***b***. Sometimes (when doing the math proofs) we include ***b*** and use an additional column of ones in ***X*** representing the bias within the ***w*** vector. To compute the output of the logistic regression for a particular example ***x***, we need to multiply each component of ***x*** by the corresponding component of ***w*** and add the bias number ***b***; then squash your result with the sigmoid function. You can plot the sigmoid function and make sure that its output is between 0 and 1. "Regression" is only part of the name of the algorithm, it has nothing to do with the regression problem.
 
 Logistic Regression is not the best algorithm in terms of accuracy (on average), but it is an interpretable algorithm: it is easy to explain to any manager or user how your model works. There is a simple relationship between the parameters and the data.
 
@@ -98,25 +99,25 @@ But how can we improve the basic logistic model? Logistic Regression is a linear
 
 However, we can transform our input ***X*** using nonlinear transformations (formally, it is applying some nonlinear function ***φ*** to ***X***). Sometimes we can solve challenging problems with this particular hack. Look at the picture below:
 
-![](misc/images/transform_figure.png)
+![transform_figure.png](misc/images/transform_figure.png)
 
 On the picture below we transform quadratic decision boundary into a linear one by calculating quadratic features:
-$`x_1 \rightarrow x_1^2`$ and $`x_2 \rightarrow x_2^2`$
+$x_1 \rightarrow x_1^2$ and $x_2 \rightarrow x_2^2$
 
 > Source: [Kevin Murphy, Probabilistic Machine Learning: An Introduction](https://probml.github.io/pml-book/book1.html)
 
 Common versions of this trick include
 * Logarithms of features (especially features with fat tails).
 * Polynomial features.
-* Division of features: feature # 1/feature #2.
-* **Sin(x)** or **Cos(x)** to catch periodic components.
+* Division of features: feature #1/feature #2.
+* **sin(x)** or **cos(x)** to catch periodic components.
 * Tree-output-like features: comparisons "is feature #1 is greater than the number **k**".
 
 Adding features has drawbacks: on average, more features can lead to more overfitting.
 
 Using complex features makes your final model less interpretable. However, sometimes we can strike a balance between explicability and accuracy. A classic example is credit scores:
 
-![](misc/images/credit_score_cards.png)
+![credit_score_cards.png](misc/images/credit_score_cards.png)
 
 > Source: https://www.lancaster.ac.uk/stor-i-student-sites/katie-howgate/2021/02/07/how-to-build-a-credit-scorecard/
 
@@ -130,17 +131,17 @@ There is another simple approach to classification problems called the **Naive B
 
 The main idea of the method is to compute the posterior probability using the Bayes formula:
 
-$$\text{posterior} = \frac{\text{prior} \cdot \text{likelihood}}{\text{evidence}}$$
+$$\text{posterior} = \frac{\text{prior} \cdot \text{likelihood}}{\text{evidence}},$$
 
-$$p(y=c|\mathbf{x}) = \frac{p(y=c) p(\mathbf{x}|y=c)}{p(\mathbf{x})} = \frac{p(y=c) p(\mathbf{x}|y=c)}{\sum_{c'} p(y=c') p(\mathbf{x}|y=c')}$$
+$$p(y=c|\mathbf{x}) = \frac{p(y=c) p(\mathbf{x}|y=c)}{p(\mathbf{x})} = \frac{p(y=c) p(\mathbf{x}|y=c)}{\sum_{c'} p(y=c') p(\mathbf{x}|y=c')}.$$
 
-So our goal will be to Maximize A Posterior (MAP estimation). But if we take a closer look at the denominator, we can understand that it is constant, since the values of the features $$x_i$$ are fixed for the dataset. Moreover, if the NB assumption holds, we can derive the probability of obtaining the feature vector $$\mathbf{x}$$, given that the label _y_ for this vector is equal to the class _c_:
+So our goal will be to Maximize A Posterior (MAP estimation). But if we take a closer look at the denominator, we can understand that it is constant, since the values of the features $x_i$ are fixed for the dataset. Moreover, if the NB assumption holds, we can derive the probability of obtaining the feature vector $\mathbf{x}$, given that the label _y_ for this vector is equal to the class _c_:
 
 $$p(\mathbf{x} | y=c) =\prod_{d=1}^D p \left( x_d | y=c \right)$$
 
-![](RackMultipart20230823-1-8wl8w6_html_c66d13329d78e68c.png)
+<!-- ![](RackMultipart20230823-1-8wl8w6_html_c66d13329d78e68c.png) -->
 
-where $$x_d$$ — feature _d_ for instance $$\mathbf{x}$$.
+where $x_d$ — feature _d_ for instance $\mathbf{x}$.
 
 Combining all statements together, we get that our problem of maximizing the Posterior is equivalent to:
 
@@ -174,7 +175,7 @@ Both LR and NB models have associated **parameters**. We use data to estimate op
 
 The idea is simple: to classify a new input ***x***, we find the ***K*** closest examples to ***x*** in the training set (using some metric such as L2 or L1 distance), then we average the labels of ***K*** received neighbors to obtain the prediction.
 
-![](misc/images/knn.png)
+![knn.png](misc/images/knn.png)
 
 > Source: [Kevin Murphy, Probabilistic Machine Learning: An Introduction](https://probml.github.io/pml-book/book1.html)
 
@@ -213,24 +214,20 @@ AUC metrics should be calculated for binary problems, Precision/Recall/F1/Fbeta 
 
 Precision and recall are metrics for hard labels: not probabilities, but class predictions. Hard labels are obtained from estimated probabilities using thresholding:
 
-$$\mathbb{I}(y=1|x) \> \text{threshold}$$
+$$\mathbb{I}(y=1|x) > \text{threshold},$$
 
-_ **I** __(p(y = 1|x) \> threshold)_
-
-where $$\mathbb{I}$$ — indicator function (one or zero, based on the underlying statement, one if it is true, zero otherwise).
+where $\mathbb{I}$ — indicator function (one or zero, based on the underlying statement, one if it is true, zero otherwise).
 
 Hard labels allow us to construct a **confusion matrix**. The definition and details of the confusion matrix are described in this [source](https://en.wikipedia.org/wiki/Confusion_matrix), study it before reading the next paragraph.
 
-![](misc/images/precision.png)
+![precision.png](misc/images/precision.png)
 
 > Source: https://medium.com/analytics-vidhya/what-is-a-confusion-matrix-d1c0f8feda5
 
 Precision and recall are defined as
 
-```math
-Precision = {tp \over {tp + fp}} \\
-Recall = {tp \over {tp + fn}}
-```
+$$Precision = {tp \over {tp + fp}}, \\
+Recall = {tp \over {tp + fn}}.$$
 
 From the formulas we can derive some interpretations:
 * Precision is *what fraction of predicted ones are actually ones*.
@@ -252,7 +249,7 @@ In other cases, Precision is preferred over Recall:
 
 Precision and Recall can be combined with appropriate averaging. The harmonic mean of Precision and Recall is called F1 Score.
 
-$`F = 2 \cdot {precision \cdot recall \over {precision + recall}}`$
+$F = 2 \cdot {precision \cdot recall \over {precision + recall}}$
 
 F1 creates a balance between precision and recall.
 
@@ -260,7 +257,7 @@ F1 creates a balance between precision and recall.
 
 If we want to pay more attention to Recall or to Precision, we use Fbeta score, which is generalization of F1 score: 
 
-$`F_{\beta} = (1 + \beta^2) \cdot {precision \cdot recall \over {\beta^2 \cdot precision + recall}}`$
+$F_{\beta} = (1 + \beta^2) \cdot {precision \cdot recall \over {\beta^2 \cdot precision + recall}}$
 
 *What parameter value gives more weight to Recall than to Precision?*
 
@@ -277,7 +274,7 @@ has a comprehensive explanation of AUC ROC. AUC ROC can be interpreted as the pr
 
 Note that the base value (random noise score) for the AUC ROC metric is 0.5, not 0!
 
-The **Gini score** can be considered as an "undirected" AUC ROC score and can be calculated using the following formula: *|2\*ROC AUC-1|*
+The **Gini score** can be considered as an "undirected" AUC ROC score and can be calculated using the following formula: *2\*ROC AUC-1*
 
 ## Chapter III. Goal
 
@@ -300,7 +297,7 @@ The goal of this task is to get a deep understanding of the basic classification
 4. Train LogisticRegression, GaussianNB, KNN from sklearn on the training dataset and check the quality of your algorithms on the validation dataset. The dependent variable (IsBadBuy) is binary. Don't forget to normalize your datasets before training your models.
 <br/><br/>You must get at least **0.15 Gini score** (the best of all three). Which algorithm performs better? And why?
 <br/><br/>
-5. Implement Gini score calculation. You can use the 2\*ROC AUC - 1 approach, so you need to implement the ROC AUC calculation. Check if your metric is approximately equal to `abs(2*sklearn.metrics.roc_auc_score - 1)`.
+5. Implement Gini score calculation. You can use the 2\*ROC AUC - 1 approach, so you need to implement the ROC AUC calculation. Check if your metric is approximately equal to `2*sklearn.metrics.roc_auc_score - 1`.
 <br/><br/>
 6. Implement your own versions of LogisticRegression, KNN and NaiveBayes classifiers. For LogisticRegression compute gradients with respect to the loss and use stochastic gradient descent. Can you reproduce the results from step 4?
 <br/><br/>Guidance for this task: Your model must be represented by class with methods *fit*, *predict* (*predict_proba* with 0.5 *threshold*), *predict_proba*. For LR moder, compute the loss gradient with respect to parameters **w** and parameter **b** in the fit function. Use a simple SGD approach to estimate optimal values of parameters.<br/><br/>
