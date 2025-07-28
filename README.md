@@ -226,7 +226,7 @@ Hard labels allow us to construct a **confusion matrix**. The definition and det
 
 Precision and recall are defined as
 
-$$Precision = {tp \over {tp + fp}}, \\
+$$Precision = {tp \over {tp + fp}}, \newline
 Recall = {tp \over {tp + fn}}.$$
 
 From the formulas we can derive some interpretations:
