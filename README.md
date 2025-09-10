@@ -313,21 +313,13 @@ Add new features to your pipeline, repeat step 4. Did you manage to increase you
 <br/><br/>
 8. Determine the best features for the problem using the coefficients of the logistic model. Try to eliminate useless features by hand and by L1 regularization. Which approach is better in terms of Gini score?
 <br/><br/>
-9. *Try to apply non-linear variants of SVM, use the RAPIDS library if you have access to a GPU. In other cases, use sklearn SVC with a nonlinear kernel. If the training process takes too much time or memory, try subsampling the training data. Will you be able to get a better Gini score (on a valid dataset) with this approach?
+9. Select your best model (algorithm + feature set) and tweak its hyperparameters to increase the Gini score on the validation dataset. Which hyperparameters have the most impact?
 <br/><br/>
-10. Select your best model (algorithm + feature set) and tweak its hyperparameters to increase the Gini score on the validation dataset. Which hyperparameters have the most impact?
+10. Check the Gini scores on all three datasets for your best model: training Gini, valid Gini, test Gini. Do you see a drop in performance when comparing the valid quality to the test quality? Is your model overfitted or not? Explain.
 <br/><br/>
-11. Check the Gini scores on all three datasets for your best model: training Gini, valid Gini, test Gini. Do you see a drop in performance when comparing the valid quality to the test quality? Is your model overfitted or not? Explain.
-<br/><br/>
-12. Implement calculation of Recall, Precision, F1 score and AUC PR metrics.
+11. Implement calculation of Recall, Precision, F1 score and AUC PR metrics.
 <br/>Compare your algorithms on the test dataset using AUC PR metric.
 <br/><br/>
-13. Which hard label metric do you prefer for the task of detecting "lemon" cars?
-
-## Chapter VI. Bonus Part
-
-* Bonus exercises marked with * in [Chapter V. Task](#chapter-v-task).
-* Derivation: Using MLE in this context means minimizing NLL.
-
+12. Which hard label metric do you prefer for the task of detecting "lemon" cars?
 
 >Please leave feedback on the project in the [feedback form.](https://forms.yandex.ru/cloud/646b472b6938722a69a85da0/) 
