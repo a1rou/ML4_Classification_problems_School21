@@ -21,7 +21,6 @@ Summary: this project is an introduction to classification problems and related 
 3. [Chapter III. Goal](#chapter-iii-goal) 
 4. [Chapter IV. Instructions](#chapter-iv-instructions)
 5. [Chapter V. Task](#chapter-v-task)
-6. [Chapter VI. Bonus part](#chapter-vi-bonus-part)
 
 ## Chapter I. Preamble
 
@@ -198,7 +197,7 @@ Linear SVM has difficulties with non-linear dependencies, and non-linear SVMs co
 
 The most common loss function used in classification problems is logloss. However, this function is not the best choice as a quality metric for business applications.
 
-There are some commonly used metrics[^1]:
+There are some commonly used metrics (we still use logloss as a minimization for our algorithms when appropriate, but make decisions with the model based on other metrics):
 1. Precision/Recall;
 2. F1 score;
 3. Fbeta Score;
@@ -206,8 +205,6 @@ There are some commonly used metrics[^1]:
 5. AUC ROC.
 
 AUC metrics should be calculated for binary problems, Precision/Recall/F1/Fbeta can be generalized for multiclass setups. We will stick to binary problems for simplicity.
-
-[^1]:  We still use logloss as a minimization for our algorithms when appropriate, but make decisions with the model based on other metrics.
 
 ##### Precision/Recall
 
