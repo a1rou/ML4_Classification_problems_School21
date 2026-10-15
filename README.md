@@ -1,3 +1,48 @@
+# Don'tGetKicked — предсказание "лемон"-автомобилей
+
+Бинарная классификация: предсказать, окажется ли машина с аукциона
+проблемной (`IsBadBuy`). Учебный проект по курсу ML, реализован
+полный пайплайн: от разбиения по времени до собственных реализаций
+алгоритмов и метрик.
+
+## Результаты
+
+| Модель | Gini (test) | AUC-PR | Precision | Recall | F1 |
+|---|---|---|---|---|---|
+| LogisticRegression (best) | **0.21** | ... | ... | ... | ... |
+| MyLogisticRegression (SGD) | ... | ... | ... | ... | ... |
+| GaussianNB / MyGaussianNB | ... | ... | ... | ... | ... |
+| KNN(200) / MyKNN | ... | ... | ... | ... | ... |
+
+> Требование задания — Gini ≥ 0.15. Итог: **0.21** на отложенном test.
+
+## Что сделано
+
+- **Разбиение по времени** — по `PurchDate`: train < valid < test (1/3–1/3–1/3).
+  Без случайного shuffle, чтобы избежать leakage из будущего.
+- **Препроцессинг** — count-encoding категорий (устойчив к новым
+  значениям в valid/test), медианная импутация числовых, StandardScaler.
+  Все энкодеры фитятся **только на train**.
+- **Feature engineering** — 10 нелинейных признаков:
+  - ratio-фичи: `VehBCost / MMR*Price`, `VehOdo / (VehicleAge+1)`,
+    `WarrantyCost / VehBCost`, `MMRRetail - VehBCost` и др.
+  - groupby-фичи: средние `VehBCost` / `VehOdo` / `WarrantyCost`
+    по `Model`, `Make`, `SubModel`, `VNST` + отношения к ним.
+- **Модели** — LogisticRegression, GaussianNB, KNN(k=100/200) из sklearn
+  + **собственные реализации всех трёх**:
+  - LR с SGD, аналитический градиент logloss, L1/L2, class_weight
+  - GaussianNB через лог-вероятности с лог-sum-exp
+  - KNN через матрицу расстояний батчами + `argpartition`
+- **Отбор признаков** — вручную по топ-|coef| и через L1 (liblinear).
+- **Подбор гиперпараметров** — сетка по `C`, `penalty`, `class_weight`.
+- **Метрики с нуля**: ROC AUC (ранги + ties), Gini, confusion matrix,
+  Precision, Recall, F1, AUC-PR (трапеции). Сверены с sklearn.
+- **Контроль переобучения** — сравнение Gini на train / valid / test.
+
+## Стек
+
+Python 3, numpy, pandas, scikit-learn. Без GPU, обучение на CPU.
+
 # Supervised Learning. Classification
 
 Summary: this project is an introduction to classification problems and related ML algorithms.
